@@ -1,0 +1,3 @@
+// adds new attribute to a document in the collection school
+db.school.updateMany({name: "Holberton school"}, {address: "972 Mssion street"});
+
