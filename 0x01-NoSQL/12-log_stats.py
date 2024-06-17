@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Shows nginx logs"""
 
 
 from pymongo import MongoClient
