@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""" returns all studnets sorted by average score"""
+"""" returns all students sorted by average score"""
 
 
 def top_students(mongo_collection):
@@ -8,8 +8,8 @@ def top_students(mongo_collection):
     pipeline = [
         {
             "$project": {
-                "name": 1,
-                "averageScore": {"$avg": "$scores.score"}
+                "name": "$name",
+                "averageScore": {"$avg": "$topics.score"}
             }
         },
         {
@@ -17,4 +17,4 @@ def top_students(mongo_collection):
         }
     ]
 
-    return list(mongo_collection.aggregate(pipeline))
+    return mongo_collection.aggregate(pipeline)
