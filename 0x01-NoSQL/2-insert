@@ -1,7 +1,3 @@
 // inserts document in school collection
-db.runCommand({
-	insert: "school",
-	documents: [ { name: "Holberton school" }]
-	}
-)
+db.school.insert({ name: "Holberton school" });
 
