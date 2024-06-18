@@ -1,2 +1,2 @@
 // finds all the documents with name starting by Holbertion
-db.school.find({ "name": { b$regex: "^Holberton" } }).forEach(printJson)
+db.school.find({ "name": { $regex: "^Holberton" } })
