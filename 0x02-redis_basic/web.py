@@ -37,6 +37,7 @@ def cache_and_track(method: Callable) -> Callable:
 
         result = method(*args, **kwargs)
         cache.setex(data_key, 10, result)
+        cache.expire(count_key, 10)
 
         return result
 
