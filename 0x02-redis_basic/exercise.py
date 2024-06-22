@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""The script contains a Cahce class that initialises redis"""
+"""The script contains a Cahce class
+that initialises redis"""
 import functools
 import uuid
 from typing import Union, Callable, Optional
-
 import redis
 
 
 def count_calls(method: Callable) -> Callable:
     """
-    A decorator that counts the number of times a method has been called
+    A decorator that counts the number of times a
+    method has been called
     :param method: The method to be decorated
     :return: The decorated method
     """
@@ -17,7 +18,8 @@ def count_calls(method: Callable) -> Callable:
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         """
-        Wrapper function that increments the count and calls the decorated method
+        Wrapper function that increments the
+        count and calls the decorated method
         :param self: The instance of the class
         :param args: The arguments of the method
         :param kwargs: The keyword arguments of the method
@@ -33,7 +35,8 @@ def count_calls(method: Callable) -> Callable:
 
 def call_history(method: Callable) -> Callable:
     """"
-    A decorator that stores the history of inputs and outputs for a particular method
+    A decorator that stores the history of
+    inputs and outputs for a particular method
     :param method: The method to be decorated
     :return: The decorated method
     """
@@ -41,7 +44,8 @@ def call_history(method: Callable) -> Callable:
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         """
-        Wrapper function that stores the history of inputs and outputs for a particular method
+        Wrapper function that stores the
+        history of inputs and outputs for a particular method
         :param self: the instance of the class
         :param args: the arguments of the method
         :param kwargs: the keyword arguments of the method
@@ -60,6 +64,10 @@ def call_history(method: Callable) -> Callable:
 
 
 class Cache:
+    """
+    A Cache class that stores inputs and outputs for a particular method
+    """
+
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
@@ -77,7 +85,8 @@ class Cache:
         return key
 
     def get(self, key: str,
-            fn: Optional[Callable[[bytes], Union[str, bytes, int, float]]] = None) \
+            fn: Optional[Callable[[bytes], Union[str, bytes, int, float]]]
+            = None) \
             -> Union[str, bytes, int, float, None]:
         """
         Retrieves data from the cache
@@ -114,7 +123,8 @@ class Cache:
     @staticmethod
     def replay(method: Callable):
         """
-        A function to display the history of a particular function
+        A function to display the history of a
+        particular function
         :param self: the instance of the class
         :param method: The function to call
         :return:
