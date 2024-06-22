@@ -30,14 +30,13 @@ def cache_and_track(method: Callable) -> Callable:
         count_key = f"count:{url}"
         data_key = f"data:{url}"
 
-        cache.incr(count_key, 1)
-
         cached_result = cache.get(data_key)
 
         if cached_result is not None:
             return cache.get(data_key).decode("utf-8")
 
         result = method(*args, **kwargs)
+        cache.incr(count_key)
         cache.setex(data_key, 10, result)
 
         return result
