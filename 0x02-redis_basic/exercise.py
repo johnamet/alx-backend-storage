@@ -24,7 +24,7 @@ def count_calls(method: Callable) -> Callable:
         :return:  The result of the decorated method
         """
 
-        key = f'{method.__qualname__}:{self}'
+        key = f'{method.__qualname__}:calls'
         self._redis.incr(key)
         return method(self, *args, **kwargs)
 
