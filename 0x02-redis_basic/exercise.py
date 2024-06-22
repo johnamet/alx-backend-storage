@@ -120,23 +120,23 @@ class Cache:
 
         return self.get(key, lambda x: int(x))
 
-    @staticmethod
-    def replay(method: Callable):
-        """
-        A function to display the history of a
-        particular function
-        :param self: the instance of the class
-        :param method: The function to call
-        :return:
-        """
 
-        redis_instance = method.__self__._redis
-        key = method.__qualname__
-        calls_count = redis_instance.get(key)
-        print(f'{key} was called {calls_count} times:')
+def replay(method: Callable):
+    """
+    A function to display the history of a
+    particular function
+    :param self: the instance of the class
+    :param method: The function to call
+    :return:
+    """
 
-        inputs = redis_instance.lrange(f'{key}:inputs', 0, -1)
-        outputs = redis_instance.lrange(f'{key}:outputs', 0, -1)
+    redis_instance = method.__self__._redis
+    key = method.__qualname__
+    calls_count = redis_instance.get(key)
+    print(f'{key} was called {calls_count} times:')
 
-        for i, j in zip(inputs, outputs):
-            print(f"{key}(*{i.decode('utf-8')}) -> {j.decode('utf-8')}")
+    inputs = redis_instance.lrange(f'{key}:inputs', 0, -1)
+    outputs = redis_instance.lrange(f'{key}:outputs', 0, -1)
+
+    for i, j in zip(inputs, outputs):
+        print(f"{key}(*{i.decode('utf-8')}) -> {j.decode('utf-8')}")
