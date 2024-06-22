@@ -133,7 +133,7 @@ def replay(method: Callable):
     redis_instance = method.__self__._redis
     key = method.__qualname__
     calls_count = redis_instance.get(key)
-    print(f'{key} was called {calls_count} times:')
+    print(f'{key} was called {int(calls_count)} times:')
 
     inputs = redis_instance.lrange(f'{key}:inputs', 0, -1)
     outputs = redis_instance.lrange(f'{key}:outputs', 0, -1)
