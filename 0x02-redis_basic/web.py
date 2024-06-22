@@ -30,7 +30,7 @@ def tracker(method: Callable) -> Callable:
         count = f"count:{url}"
         data = f"data:{url}"
 
-        cache.incr(count)
+        cache.incr(count, 1)
 
         if cache.exists(data):
             return cache.get(data).decode("utf-8")
