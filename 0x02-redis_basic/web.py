@@ -9,7 +9,7 @@ import redis
 import requests
 
 
-def tracker(method: Callable) -> Callable:
+def cache_and_track(method: Callable) -> Callable:
     """
     A decorator that tracks how many times an url is accessed
     and caches the result with an expiration time of 10 seconds
@@ -43,7 +43,7 @@ def tracker(method: Callable) -> Callable:
     return wrapper
 
 
-@tracker
+@cache_and_track
 def get_page(url: str) -> str:
     """
     Get the page from a url
