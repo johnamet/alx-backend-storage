@@ -28,7 +28,7 @@ def tracker(method: Callable) -> Callable:
         cache = redis.Redis()
         url = args[0]
         count = f"count:{url}"
-        data = f"data:{url}"
+        data = url
 
         cache.incr(count, 1)
 
