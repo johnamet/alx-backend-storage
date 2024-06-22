@@ -32,12 +32,13 @@ def cache_and_track(method: Callable) -> Callable:
 
         cache.incr(count_key, 1)
 
-        if cache.exists(data_key):
+        cached_result = cache.get(data_key)
+
+        if cached_result is not None:
             return cache.get(data_key).decode("utf-8")
 
         result = method(*args, **kwargs)
         cache.setex(data_key, 10, result)
-        cache.expire(count_key, 10)
 
         return result
 
