@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The scripts implements a expiring web cache and tracker
+The script implements an expiring web cache and tracker
 """
 import functools
 from typing import Callable
@@ -21,23 +21,22 @@ def tracker(method: Callable) -> Callable:
     def wrapper(*args, **kwargs):
         """
         The wrapper function to cache the result
-        :param args:
-        :param kwargs:
-        :return:
+        :param args: positional arguments
+        :param kwargs: keyword arguments
+        :return: The result of the decorated method
         """
         cache = redis.Redis()
         url = args[0]
-        count = f"count:{url}"
-        data = url
+        count_key = f"count:{url}"
+        data_key = f"data:{url}"
 
-        cache.incr(count, 1)
+        cache.incr(count_key, 1)
 
-        if cache.exists(data):
-            return cache.get(data).decode("utf-8")
+        if cache.exists(data_key):
+            return cache.get(data_key).decode("utf-8")
 
         result = method(*args, **kwargs)
-
-        cache.setex(data, 10, result)
+        cache.setex(data_key, 10, result)
 
         return result
 
@@ -52,5 +51,4 @@ def get_page(url: str) -> str:
     :return: the html of the page
     """
     r = requests.get(url)
-
     return r.text
